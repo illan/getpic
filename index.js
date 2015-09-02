@@ -1,13 +1,22 @@
-navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+/**
+ * navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
       destinationType: Camera.DestinationType.DATA_URL
 });
+*/
 
-function onSuccess(imageData) {
-   var image = document.createElement('img');
-   image.src = "data:image/jpeg;base64," + imageData;
-   document.body.appendChild(image);
-}
+function onSuccess(contacts) {
+    alert('Found ' + contacts.length + ' contacts.');
+    alert(JSON.stringify(contacts));
+};
 
-function onFail(message) {
-      alert('Failed because: ' + message);
-}
+function onError(contactError) {
+    alert('onError!');
+};
+
+// find all contacts with 'Bob' in any name field
+var options      = new ContactFindOptions();
+options.filter   = "Patri";
+options.multiple = true;
+var fields       = ["displayName", "name", "phoneNumbers"];
+navigator.contacts.find(fields, onSuccess, onError, options);
+
